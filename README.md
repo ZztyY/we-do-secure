@@ -1,4 +1,4 @@
-# manage
+# we-do-secure
 
 ## Project setup
 ```
