@@ -42,6 +42,11 @@ const routes = [
                 component: () => import('../views/assets/home')
             },
             {
+                path: '/assets/home/detail/:id',
+                name: 'home-detail',
+                component: () => import('../views/assets/home/homeDetail.vue')
+            },
+            {
                 path: '/assets/vehicle',
                 name: 'vehicle',
                 component: () => import('../views/assets/vehicle')

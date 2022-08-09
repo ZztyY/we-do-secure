@@ -2,17 +2,19 @@
     <div>
         <el-row :gutter="20" v-for="(row, index) in sliceList(homeList, 2)" :key="index">
             <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
-                <el-card shadow="hover" :class="'home'+ i">
-                    <div style="display:flex; justify-content:space-between;">
-                        <i class="el-icon-s-home"></i>
-                        <span> ${{ item.PUR_VAL }} </span>
-                    </div>
-                    <el-divider></el-divider>
-                    <div>
-                        <p>Area: {{ item.hAREA}}</p>
-                        <p>Home Type: {{ item.hTYPE}}</p>
-                    </div>
-                </el-card>
+                <div @click="toDetail(item.hID)">
+                    <el-card shadow="hover" :class="'home'+ i">
+                        <div style="display:flex; justify-content:space-between;">
+                            <i class="el-icon-s-home"></i>
+                            <span> ${{ item.PUR_VAL }} </span>
+                        </div>
+                        <el-divider></el-divider>
+                        <div>
+                            <p>Area: {{ item.hAREA}}</p>
+                            <p>Home Type: {{ item.hTYPE}}</p>
+                        </div>
+                    </el-card>
+                </div>
             </el-col>
         </el-row>
     </div>
@@ -29,7 +31,7 @@ export default {
     mounted() {
     },
     computed: {
-        homeList(){
+        homeList() {
             return [
             {
                 hID: 1,
@@ -103,6 +105,9 @@ export default {
                 }
                 return tempArr
             }
+        },
+        toDetail(id) {
+            this.$router.push({ name: 'home-detail', params: { id }})
         }
     }
 }
