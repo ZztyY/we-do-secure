@@ -7,7 +7,7 @@
         <el-form-item label="password" label-width="80px" prop="password" class="password">
             <el-input type="password" v-model="form.password" autocomplete="off" placeholder="please input password"></el-input>
         </el-form-item>
-        <el-form-item label="confirm password" label-width="80px" prop="password2" class="password2">
+        <el-form-item label="confirm" label-width="80px" prop="password2" class="password2">
             <el-input type="password" v-model="form.password2" autocomplete="off" placeholder="please confirm password"></el-input>
         </el-form-item>
         <el-form-item class="register-confirm">
@@ -66,5 +66,11 @@ export default {
 }
 .register-confirm {
     margin: 10px auto 0px auto;
+}
+.username {
+    height: 50px
+}
+.password {
+    height: 50px
 }
 </style>

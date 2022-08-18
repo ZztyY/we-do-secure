@@ -32,9 +32,19 @@ const routes = [
                 component: () => import('../views/policy/homePolicies')
             },
             {
+                path: '/policy/home/detail/:id',
+                name: 'home-policies-detail',
+                component: () => import('../views/policy/homePolicies/homePoliciesDetail.vue')
+            },
+            {
                 path: '/policy/auto',
                 name: 'auto-policies',
                 component: () => import('../views/policy/autoPolicies')
+            },
+            {
+                path: '/policy/auto/detail/:id',
+                name: 'auto-policies-detail',
+                component: () => import('../views/policy/autoPolicies/autoPoliciesDetail.vue')
             },
             {
                 path: '/assets/home',
@@ -50,6 +60,11 @@ const routes = [
                 path: '/assets/vehicle',
                 name: 'vehicle',
                 component: () => import('../views/assets/vehicle')
+            },
+            {
+                path: '/assets/vehicle/detail/:id',
+                name: 'vehicle-detail',
+                component: () => import('../views/assets/vehicle/vehicleDetail.vue')
             }
         ]
     },

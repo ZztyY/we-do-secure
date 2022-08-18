@@ -2,17 +2,19 @@
     <div>
         <el-row :gutter="20" v-for="(row, index) in sliceList(vehicleList, 2)" :key="index">
             <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
-                <el-card shadow="hover" :class="'vehicle'+ i">
-                    <div>
-                        <i class="el-icon-bicycle"></i>
-                        <span> {{ item.vin }} </span>
-                    </div>
-                    <el-divider></el-divider>
-                    <div>
-                        <p>Vehicle make model year: {{ item.vmmyear}}</p>
-                        <p>Vehicle status: {{ item.vstatus}}</p>
-                    </div>
-                </el-card>
+                <div @click="toDetail(item.vin)">
+                    <el-card shadow="hover" :class="'vehicle'+ i">
+                        <div>
+                            <i class="el-icon-bicycle"></i>
+                            <span> {{ item.vin }} </span>
+                        </div>
+                        <el-divider></el-divider>
+                        <div>
+                            <p>Vehicle make model year: {{ item.vmmyear }}</p>
+                            <p>Vehicle status: {{ item.vstatus }}</p>
+                        </div>
+                    </el-card>
+                </div>
             </el-col>
         </el-row>
     </div>
@@ -73,6 +75,9 @@ export default {
                 }
                 return tempArr
             }
+        },
+        toDetail(id) {
+            this.$router.push({ name: 'vehicle-detail', params: { id }})
         }
     }
 }

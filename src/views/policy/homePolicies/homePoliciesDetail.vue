@@ -1,5 +1,5 @@
 <template>
-    <el-descriptions class="Info" title="home" :column="1" :size="size" border>
+    <el-descriptions class="Info" title="homePolicy" :column="1" :size="size" border>
         <template slot="extra">
             <el-button type="primary" size="small">Edit</el-button>
         </template>
@@ -65,7 +65,7 @@
 <script>
 
 export default {
-    name: 'home-detail-view',
+    name: 'home-policy-detail-view',
     data () {
         return {
             userImg: require('../../../assets/user.png'),

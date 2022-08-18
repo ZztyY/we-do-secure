@@ -10,8 +10,8 @@
                         </div>
                         <el-divider></el-divider>
                         <div>
-                            <p>Area: {{ item.hAREA}}</p>
-                            <p>Home Type: {{ item.hTYPE}}</p>
+                            <p>Area: {{ item.hAREA }}</p>
+                            <p>Home Type: {{ item.hTYPE }}</p>
                         </div>
                     </el-card>
                 </div>

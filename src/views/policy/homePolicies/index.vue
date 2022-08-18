@@ -2,18 +2,20 @@
     <div>
         <el-row :gutter="20" v-for="(row, index) in sliceList(homePoliciesList, 2)" :key="index">
             <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
-                <el-card shadow="hover" :class="'homePolicies'+ i">
-                    <div style="display:flex; justify-content:space-between;">
-                        <i class="el-icon-document"></i>
-                        <span> #{{ item.pID }} </span>
-                    </div>
-                    <el-divider></el-divider>
-                    <div>
-                        <p>Policy Amount: ${{ item.pAMOUNT}}</p>
-                        <p v-if="item.pSTATUS === 'C'" style="color: green">CURRENT</p>
-                        <p v-else style="color: red">EXPIRED</p>
-                    </div>
-                </el-card>
+                <div @click="toDetail(item.pID)">
+                    <el-card shadow="hover" :class="'homePolicies'+ i">
+                        <div style="display:flex; justify-content:space-between;">
+                            <i class="el-icon-document"></i>
+                            <span> #{{ item.pID }} </span>
+                        </div>
+                        <el-divider></el-divider>
+                        <div>
+                            <p>Policy Amount: ${{ item.pAMOUNT}}</p>
+                            <p v-if="item.pSTATUS === 'C'" style="color: green">CURRENT</p>
+                            <p v-else style="color: red">EXPIRED</p>
+                        </div>
+                    </el-card>
+                </div>
             </el-col>
         </el-row>
     </div>
@@ -94,6 +96,9 @@ export default {
                 }
                 return tempArr
             }
+        },
+        toDetail(id) {
+            this.$router.push({ name: 'home-policies-detail', params: { id }})
         }
     }
 }
