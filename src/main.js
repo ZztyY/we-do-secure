@@ -7,7 +7,8 @@ import {
   Menu, Submenu, MenuItem, MenuItemGroup,
   Dropdown,DropdownMenu, DropdownItem,
   Row, Col, Card, Form, FormItem,
-  Input, Divider, Descriptions, DescriptionsItem 
+  Input, Divider, Descriptions, DescriptionsItem,
+  Dialog, Select, Option
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import router from './router'
@@ -37,6 +38,9 @@ Vue.use(Input)
 Vue.use(Divider)
 Vue.use(Descriptions)
 Vue.use(DescriptionsItem)
+Vue.use(Dialog)
+Vue.use(Select)
+Vue.use(Option)
 
 Vue.prototype.$http = http
 
