@@ -1,65 +1,58 @@
 <template>
-    <el-descriptions class="Info" title="vehicle" :column="1" :size="size" border>
-        <template slot="extra">
-            <el-button type="primary" size="small">Edit</el-button>
-        </template>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-user"></i>
-                First Name
+    <div>
+        <el-descriptions class="Info" title="vehicle" :column="1" :size="size" border>
+            <template slot="extra">
+                <el-button @click="dialogVisible = true" type="primary" size="small">Edit</el-button>
             </template>
-            {{ userInfo.fName }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-user"></i>
-                Last Name
-            </template>
-            {{ userInfo.lName }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-position"></i>
-                Street
-            </template>
-            {{ userInfo.street }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-position"></i>
-                City
-            </template>
-            {{ userInfo.city }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-position"></i>
-                State
-            </template>
-            {{ userInfo.state }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-position"></i>
-                Zipcode
-            </template>
-            {{ userInfo.zipcode }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-male"></i>
-                Gender
-            </template>
-            {{ userInfo.gender }}
-        </el-descriptions-item>
-        <el-descriptions-item :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-connection"></i>
-                Marrital Status
-            </template>
-            {{ userInfo.mar_status }}
-        </el-descriptions-item>
-    </el-descriptions>
+            <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
+                <template slot="label">
+                    <i class="el-icon-date"></i>
+                    vehicle identification number
+                </template>
+                {{ vehicleInfo.vin }}
+            </el-descriptions-item>
+            <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
+                <template slot="label">
+                    <i class="el-icon-coin"></i>
+                    vehicle make-model-year
+                </template>
+                {{ vehicleInfo.vmmyear }}
+            </el-descriptions-item>
+            <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
+                <template slot="label">
+                    <i class="el-icon-location"></i>
+                    status of the vehicle
+                </template>
+                {{ vehicleInfo.vstatus }}
+            </el-descriptions-item>
+        </el-descriptions>
+
+        <!-- edit home dialog -->
+        <el-dialog
+        title="edit vehicle"
+        :visible.sync="dialogVisible"
+        width="30%">
+            <el-form :model="form" status-icon ref="form" label-width="200px">
+                <el-form-item label="VIN" prop="vin">
+                    <el-input v-model="form.vin"></el-input>
+                </el-form-item>
+                <el-form-item label="make model year" prop="vmmyear">
+                    <el-input v-model="form.vmmyear"></el-input>
+                </el-form-item>
+                <el-form-item label="status" prop="vstatus">
+                    <el-select v-model="form.vstatus" placeholder="choose your vehicle status">
+                        <el-option label="leased" value="L"></el-option>
+                        <el-option label="financed" value="F"></el-option>
+                        <el-option label="owned" value="O"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm">submit</el-button>
+                    <el-button @click="reset('form')">reset</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+    </div>
 </template>
 
 <script>
@@ -75,6 +68,10 @@ export default {
             },
             labelStyle: {
                 'width': '30%'
+            },
+            dialogVisible: false,
+            form: {
+
             }
         }
     },
@@ -82,20 +79,23 @@ export default {
         console.log(this.$route.params.id)
     },
     computed: {
-        userInfo() {
+        vehicleInfo() {
             return {
-                fName: 'Tianyi',
-                lName: 'Zheng',
-                street: '33 Bond St',
-                city: 'brooklyn',
-                state: 'NY',
-                zipcode: '11201',
-                gender: 'male',
-                mar_status: 'single'
+                vin: 'JH4DC4340RS000837',
+                vmmyear: '2019',
+                vstatus: 'lease'
             }
         },
-        hID() {
+        vID() {
             return this.$route.params.id
+        }
+    },
+    methods: {
+        submitForm() {
+            console.log(this.form)
+        },
+        reset(formName) {
+            this.$refs[formName].resetFields();
         }
     }
 }
