@@ -6,21 +6,21 @@
             </template>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
-                    <i class="el-icon-date"></i>
+                    <i class="el-icon-bicycle"></i>
                     vehicle identification number
                 </template>
                 {{ vehicleInfo.vin }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
-                    <i class="el-icon-coin"></i>
+                    <i class="el-icon-date"></i>
                     vehicle make-model-year
                 </template>
                 {{ vehicleInfo.vmmyear }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
-                    <i class="el-icon-location"></i>
+                    <i class="el-icon-info"></i>
                     status of the vehicle
                 </template>
                 {{ vehicleInfo.vstatus }}
@@ -37,7 +37,7 @@
                     <el-input v-model="form.vin"></el-input>
                 </el-form-item>
                 <el-form-item label="make model year" prop="vmmyear">
-                    <el-input v-model="form.vmmyear"></el-input>
+                    <el-date-picker v-model="form.vmmyear" type="year" placeholder="choose a year"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="status" prop="vstatus">
                     <el-select v-model="form.vstatus" placeholder="choose your vehicle status">

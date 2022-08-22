@@ -12,10 +12,14 @@ import {
   Switch, RadioGroup, Radio
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
+import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale'
 import router from './router'
 import store from './store'
 import http from 'axios'
 import App from './App.vue'
+
+locale.use(lang)
 
 Vue.config.productionTip = false
 Vue.use(Button)

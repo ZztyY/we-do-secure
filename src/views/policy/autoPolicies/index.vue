@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-row :gutter="20" v-for="(row, index) in sliceList(homePoliciesList, 2)" :key="index">
+        <el-row :gutter="20" v-for="(row, index) in sliceList(autoPoliciesList, 2)" :key="index">
             <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
                 <div @click="toDetail(item.pID)">
                     <el-card shadow="hover" :class="'homePolicies'+ i">
@@ -32,7 +32,7 @@ export default {
     mounted() {
     },
     computed: {
-        homePoliciesList(){
+        autoPoliciesList(){
             return [
             {
                 pID: 16348123,

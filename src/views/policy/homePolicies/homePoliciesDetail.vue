@@ -1,65 +1,37 @@
 <template>
-    <el-descriptions class="Info" title="homePolicy" :column="1" :size="size" border>
-        <template slot="extra">
-            <el-button type="primary" size="small">Edit</el-button>
-        </template>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-user"></i>
-                First Name
-            </template>
-            {{ userInfo.fName }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-user"></i>
-                Last Name
-            </template>
-            {{ userInfo.lName }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-position"></i>
-                Street
-            </template>
-            {{ userInfo.street }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-position"></i>
-                City
-            </template>
-            {{ userInfo.city }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-position"></i>
-                State
-            </template>
-            {{ userInfo.state }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-position"></i>
-                Zipcode
-            </template>
-            {{ userInfo.zipcode }}
-        </el-descriptions-item>
-        <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-male"></i>
-                Gender
-            </template>
-            {{ userInfo.gender }}
-        </el-descriptions-item>
-        <el-descriptions-item :contentStyle="contentStyle">
-            <template slot="label">
-                <i class="el-icon-connection"></i>
-                Marrital Status
-            </template>
-            {{ userInfo.mar_status }}
-        </el-descriptions-item>
-    </el-descriptions>
+    <div>
+        <el-descriptions class="Info" title="homePolicy" :column="1" :size="size" border>
+            <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
+                <template slot="label">
+                    <i class="el-icon-date"></i>
+                    policy start date
+                </template>
+                {{ homePolicyInfo.START_DATE }}
+            </el-descriptions-item>
+            <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
+                <template slot="label">
+                    <i class="el-icon-date"></i>
+                    policy end date
+                </template>
+                {{ homePolicyInfo.END_DATE }}
+            </el-descriptions-item>
+            <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
+                <template slot="label">
+                    <i class="el-icon-coin"></i>
+                    policy amount
+                </template>
+                ${{ homePolicyInfo.pAMOUNT }}
+            </el-descriptions-item>
+            <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
+                <template slot="label">
+                    <i class="el-icon-info"></i>
+                    policy status
+                </template>
+                <p v-if="homePolicyInfo.pSTATUS === 'C'" style="color: green">CURRENT</p>
+                <p v-else style="color: red">EXPIRED</p>
+            </el-descriptions-item>
+        </el-descriptions>
+    </div>
 </template>
 
 <script>
@@ -82,21 +54,22 @@ export default {
         console.log(this.$route.params.id)
     },
     computed: {
-        userInfo() {
+        homePolicyInfo() {
             return {
-                fName: 'Tianyi',
-                lName: 'Zheng',
-                street: '33 Bond St',
-                city: 'brooklyn',
-                state: 'NY',
-                zipcode: '11201',
-                gender: 'male',
-                mar_status: 'single'
+                pID: 16348123,
+                START_DATE: '2010/07/22',
+                END_DATE: '2020/7/22',
+                pAMOUNT: 4000,
+                pSTATUS: 'P',
+                pTYPE: 'H',
+                cID: 1
             }
         },
-        hID() {
+        pID() {
             return this.$route.params.id
         }
+    },
+    methods: {
     }
 }
 </script>
