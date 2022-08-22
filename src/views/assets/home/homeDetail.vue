@@ -100,6 +100,9 @@
                         <el-option label="no" value=null></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="has home security system" prop="hBM">
+                    <el-switch v-model="form.hBM"></el-switch>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm">submit</el-button>
                     <el-button @click="reset('form')">reset</el-button>
