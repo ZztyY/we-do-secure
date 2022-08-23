@@ -9,7 +9,8 @@ import {
   Row, Col, Card, Form, FormItem,
   Input, Divider, Descriptions, DescriptionsItem,
   Dialog, Select, Option, DatePicker,
-  Switch, RadioGroup, Radio
+  Switch, RadioGroup, Radio,
+  InfiniteScroll, Message
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import lang from 'element-ui/lib/locale/lang/en'
@@ -50,11 +51,13 @@ Vue.use(DatePicker)
 Vue.use(Switch)
 Vue.use(Radio)
 Vue.use(RadioGroup)
+Vue.use(InfiniteScroll)
 
 Vue.prototype.$http = http
+Vue.prototype.$message = Message
 
 router.beforeEach(( to, from, next) =>  {
-  store.commit('getToken')
+  store.commit('getUser')
   const token = store.state.user.token
   if (!token && to.name !== 'login' && to.name !== 'register') {
     next({ name: 'login' })

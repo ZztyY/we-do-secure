@@ -142,9 +142,6 @@
                 <el-form-item label="confirm" prop="checkPass">
                     <el-input type="password" v-model="resetForm.checkPass" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="age" prop="age">
-                    <el-input v-model.number="resetForm.age"></el-input>
-                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('resetForm')">submit</el-button>
                     <el-button @click="reset('resetForm')">reset</el-button>
@@ -155,26 +152,12 @@
 </template>
 
 <script>
+import { resetPassword } from '@/api/data';
+
 
 export default {
     name: 'user-view',
     data () {
-        var checkAge = (rule, value, callback) => {
-            if (!value) {
-                return callback(new Error('age cannot be null'));
-            }
-            setTimeout(() => {
-                if (!Number.isInteger(value)) {
-                    callback(new Error('please input a number'));
-                } else {
-                    if (value < 18) {
-                    callback(new Error('must above 18'));
-                } else {
-                    callback();
-                }
-            }
-            }, 1000);
-        };
         var validatePass = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('please input password'));
@@ -217,9 +200,6 @@ export default {
                 ],
                 checkPass: [
                     { validator: validatePass2, trigger: 'blur' }
-                ],
-                age: [
-                    { validator: checkAge, trigger: 'blur' }
                 ]
             }
         }
@@ -248,7 +228,21 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    if (formName === 'resetForm') {
+                        var param = {
+                            user_id: this.$store.state.user.uId,
+                            password: this.resetForm.pass
+                        }
+                        resetPassword(param).then(res => {
+                            if (res.data.code == 0) {
+                                this.$message('reset success');
+                                this.resetDialogVisible = false
+                            } else {
+                                this.$message(res.data.message);
+                                this.$refs.resetForm.resetFields();
+                            }
+                        })
+                    }
                 } else {
                     console.log('error submit!!');
                     return false;

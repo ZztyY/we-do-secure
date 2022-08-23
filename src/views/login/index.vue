@@ -1,19 +1,22 @@
 <template>
     <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="login-container">
         <h3 class="login-title"> Login </h3>
-        <el-form-item label="username" label-width="80px" prop="username" class="username">
-            <el-input type="input" v-model="form.username" autocomplete="off" placeholder="please input username"></el-input>
+        <el-form-item label="username" label-width="80px" prop="user_name" class="username">
+            <el-input type="input" v-model="form.user_name" autocomplete="off" placeholder="please input username"></el-input>
         </el-form-item>
         <el-form-item label="password" label-width="80px" prop="password" class="password">
             <el-input type="password" v-model="form.password" autocomplete="off" placeholder="please input password"></el-input>
         </el-form-item>
         <el-form-item class="login-confirm">
             <el-button type="primary" @click="login" class="login-confirm"> login </el-button>
+            <el-button type="info" @click="gotoRegister" class="goto-register"> register </el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script>
+import { login } from '@/api/data'
+
 export default {
     name: 'login-view',
     data () {
@@ -22,7 +25,7 @@ export default {
 
             },
             rules: {
-                username: [
+                user_name: [
                     { required: true, message: "Please input username!", trigger: "blur" },
                     { min: 3, message: "Username length should > 3!", trigger: "blur" }
                 ],
@@ -34,9 +37,27 @@ export default {
     },
     methods: {
         login() {
-            this.$store.dispatch('setToken')
+            var param = new FormData()
+            for (var key in this.form) {
+                param.append(key, this.form[key])
+            }
+            login(param).then(res => {
+                console.log(res.data)
+                if (res.data.code == 0) {
+                    this.$message('login success');
+                    this.$store.dispatch('setUser', res.data.data)
+                    this.$router.push({
+                        name: 'overview'
+                    })
+                } else {
+                    this.$message(res.data.message);
+                    this.$refs.form.resetFields();
+                }
+            })
+        },
+        gotoRegister() {
             this.$router.push({
-                name: 'overview'
+                name: 'register'
             })
         }
     }

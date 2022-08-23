@@ -36,7 +36,7 @@
             },
             handleCommand(command) {
                 if (command === "logout") {
-                    this.$store.commit('removeToken')
+                    this.$store.commit('removeUser')
                     this.$router.push({
                         name: 'login'
                     })

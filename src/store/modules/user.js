@@ -2,24 +2,30 @@ import Cookie from 'js-cookie'
 
 export default {
     state: {
+        uId: null,
         token: ''
     },
     mutations: {
-        setToken(state, value) {
-            state.token = value
-            Cookie.set('token', value)
+        setUser(state, data) {
+            state.uId = data.id
+            state.token = data.token
+            Cookie.set('uId', state.uId)
+            Cookie.set('token', state.token)
         },
-        removeToken(state) {
+        removeUser(state) {
             state.token = ''
+            state.uId = null
             Cookie.remove('token')
+            Cookie.remove('uId')
         },
-        getToken(state) {
+        getUser(state) {
             state.token = state.token || Cookie.get('token')
+            state.uId = state.uId || Cookie.get('uId')
         }
     },
     actions: {
-        setToken(context) {
-            context.commit('setToken', 'abc')
+        setUser(context, data) {
+            context.commit('setUser', data)
         }
     }
 }

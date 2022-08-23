@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from'qs'
 import config from '../config'
 
 const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
@@ -11,7 +12,8 @@ class HttpRequest {
     getInsideConfig() {
         const config = {
             baseURL: this.baseUrl,
-            header: {
+            headers: {
+                'Content-Type': 'application/form-data'
             }
         }
         return config
@@ -21,6 +23,7 @@ class HttpRequest {
         // 添加请求拦截器
         instance.interceptors.request.use(function (config) {
             // 在发送请求之前做些什么
+            qs.stringify(config.data)
             return config;
         }, function (error) {
             console.log(error)
