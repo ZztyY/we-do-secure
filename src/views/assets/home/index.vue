@@ -124,6 +124,7 @@ export default {
             param.append('uid', this.uId)
             homeAdd(param).then(res => {
                 if (res.data.code == 0) {
+                    this.$message('create home success');
                     var param = {
                         uid: this.uId
                     }

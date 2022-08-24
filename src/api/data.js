@@ -55,3 +55,19 @@ export const homeDetail = (param) => {
         params: param
     })
 }
+
+export const userInfo = (param) => {
+    return axios.request({
+        url: 'WDS/cus/get',
+        method: 'get',
+        params: param
+    })
+}
+
+export const editProfile = (param) => {
+    return axios.request({
+        url: 'WDS/cus/edit',
+        method: 'post',
+        data: param
+    })
+}

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-descriptions class="Info" title="home" :column="1" :size="size" border>
+        <el-descriptions v-if="homeInfo" class="Info" title="home" :column="1" :size="size" border>
             <template slot="extra">
                 <el-button @click="dialogVisible = true" type="primary" size="small">Edit</el-button>
             </template>
@@ -137,17 +137,7 @@ export default {
         }
     },
     mounted() {
-        this.$store.commit('getUser')
-        this.uId = this.$store.state.user.uId
-        this.hID = this.$route.params.id
-        var param = {
-            hid: this.hID
-        }
-        homeDetail(param).then(res => {
-            if (res.data.code == 0) {
-                this.homeInfo = res.data.data
-            }
-        })
+        this.getHomeDetail()
     },
     computed: {
     },
@@ -162,6 +152,7 @@ export default {
             param.append('hid', this.hID)
             homeAdd(param).then(res => {
                 if (res.data.code == 0) {
+                    this.$message('edit success');
                     var param = {
                         hid: this.hID
                     }
@@ -175,6 +166,19 @@ export default {
         },
         reset(formName) {
             this.$refs[formName].resetFields();
+        },
+        async getHomeDetail() {
+            this.$store.commit('getUser')
+            this.uId = this.$store.state.user.uId
+            this.hID = this.$route.params.id
+            var param = {
+                hid: this.hID
+            }
+            await homeDetail(param).then(res => {
+                if (res.data.code == 0) {
+                    this.homeInfo = res.data.data
+                }
+            })
         }
     }
 }

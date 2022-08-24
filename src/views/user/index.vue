@@ -20,7 +20,7 @@
             <el-col :span="12" style="margin-top: 20px;">
                 <el-card shadow="hover">
                     <div class="accountInfo">
-                        <el-descriptions class="Info" title="Personal" :column="1" :size="size" border>
+                        <el-descriptions v-if="userInfo" class="Info" title="Personal" :column="1" :size="size" border>
                             <template slot="extra">
                                 <el-button @click="dialogVisible = true" type="primary" size="small">Edit</el-button>
                             </template>
@@ -112,9 +112,9 @@
                 </el-form-item>
                 <el-form-item label="Gender">
                     <el-select v-model="form.gender" placeholder="choose your gender">
-                        <el-option label="male" value="0"></el-option>
-                        <el-option label="female" value="1"></el-option>
-                        <el-option label="private" value=null></el-option>
+                        <el-option label="male" value="M"></el-option>
+                        <el-option label="female" value="F"></el-option>
+                        <el-option label="private" value=""></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Marital Status">
@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import { resetPassword } from '@/api/data';
+import { resetPassword, userInfo, editProfile } from '@/api/data';
 
 
 export default {
@@ -201,29 +201,33 @@ export default {
                 checkPass: [
                     { validator: validatePass2, trigger: 'blur' }
                 ]
-            }
+            },
+            uId: null,
+            userInfo: null
         }
     },
     mounted() {
+        this.getprofile()
     },
     computed: {
-        userInfo() {
-            return {
-                fName: 'Tianyi',
-                lName: 'Zheng',
-                street: '33 Bond St',
-                city: 'brooklyn',
-                state: 'NY',
-                zipcode: '11201',
-                gender: 'male',
-                mar_status: 'single'
-            }
-        }
     },
     methods: {
         onSubmit() {
-            console.log(this.form)
-            this.dialogVisible=false
+            var param = new FormData()
+            for (var key in this.form) {
+                param.append(key, this.form[key])
+            }
+            param.append('uid', this.uId)
+            editProfile(param).then(res => {
+                if (res.data.code == 0) {
+                    this.$message('edit success');
+                    this.userInfo = res.data.data
+                    this.dialogVisible=false
+                } else {
+                    this.$message(res.data.message);
+                    this.$refs.form.resetFields();
+                }
+            })
         },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
@@ -251,6 +255,18 @@ export default {
         },
         reset(formName) {
             this.$refs[formName].resetFields();
+        },
+        async getprofile() {
+            this.$store.commit('getUser')
+            this.uId = this.$store.state.user.uId
+            var param = {
+                uid: this.uId
+            }
+            await userInfo(param).then(res => {
+                if (res.data.code == 0) {
+                    this.userInfo = res.data.data
+                }
+            })
         }
     }
 }
