@@ -65,6 +65,11 @@ const routes = [
                 path: '/assets/vehicle/detail/:id',
                 name: 'vehicle-detail',
                 component: () => import('../views/assets/vehicle/vehicleDetail.vue')
+            },
+            {
+                path: '/assets/driver/detail/:vid/:did',
+                name: 'driver-detail',
+                component: () => import('../views/assets/driver')
             }
         ]
     },

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-descriptions class="Info" title="vehicle" :column="1" :size="size" border>
+        <el-descriptions v-if="vehicleInfo" class="Info" title="vehicle" :column="1" :size="size" border>
             <template slot="extra">
                 <el-button @click="dialogVisible = true" type="primary" size="small">Edit</el-button>
             </template>
@@ -27,6 +27,29 @@
             </el-descriptions-item>
         </el-descriptions>
 
+        <div v-if="driverList">
+            <el-divider content-position="left">related drivers</el-divider>
+            <el-button @click="dialogVisible=true" type="primary">new</el-button>
+            <el-row :gutter="20" v-for="(row, index) in sliceList(driverList, 2)" :key="index">
+                <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
+                    <div @click="toDetail(item.did)">
+                        <el-card shadow="hover" :class="'driver'+ i">
+                            <div>
+                                <i class="el-icon-user"></i>
+                                <span> {{ item.lNum }} </span>
+                            </div>
+                            <el-divider></el-divider>
+                            <div>
+                                <p>first name: {{ item.fName }}</p>
+                                <p>last name: {{ item.lName }}</p>
+                                <p>birth date: {{ item.birth }}</p>
+                            </div>
+                        </el-card>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+
         <!-- edit home dialog -->
         <el-dialog
         title="edit vehicle"
@@ -37,7 +60,7 @@
                     <el-input v-model="form.vin"></el-input>
                 </el-form-item>
                 <el-form-item label="make model year" prop="vmmyear">
-                    <el-date-picker v-model="form.vmmyear" type="year" placeholder="choose a year"></el-date-picker>
+                    <el-date-picker v-model="form.vmmyear" value-format="yyyy" type="year" placeholder="choose a year"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="status" prop="vstatus">
                     <el-select v-model="form.vstatus" placeholder="choose your vehicle status">
@@ -56,6 +79,8 @@
 </template>
 
 <script>
+import { editVehicle, vehicleInfo, vehicleDriverList } from '@/api/data';
+
 
 export default {
     name: 'vehicle-detail-view',
@@ -72,31 +97,90 @@ export default {
             dialogVisible: false,
             form: {
 
-            }
+            },
+            vId: null,
+            uId: null,
+            vehicleInfo: null,
+            driverList: null
         }
     },
     mounted() {
-        console.log(this.$route.params.id)
+        this.getVehicleDetail()
+        this.getDriverList()
     },
     computed: {
-        vehicleInfo() {
-            return {
-                vin: 'JH4DC4340RS000837',
-                vmmyear: '2019',
-                vstatus: 'lease'
-            }
-        },
-        vID() {
-            return this.$route.params.id
-        }
     },
     methods: {
+        sliceList(data, count) {
+            if (data != undefined) {
+                let index = 0;
+                let tempArr = [];
+                for (let i = 0; i< data.length; i++) {
+                    index = parseInt(i / count);
+                    if (tempArr.length <= index) {
+                        tempArr.push([]);
+                    }
+                    tempArr[index].push(data[i]);
+                }
+                return tempArr
+            }
+        },
         submitForm() {
-            console.log(this.form)
+            var param = new FormData()
+            for (var key in this.form) {
+                param.append(key, this.form[key])
+            }
+            param.append('uid', this.uId)
+            param.append('vid', this.vId)
+            editVehicle(param).then(res => {
+                if (res.data.code == 0) {
+                    this.dialogVisible = false
+                    this.$message('edit success');
+                    var param = {
+                        vid: this.vId
+                    }
+                    vehicleInfo(param).then(res => {
+                        if (res.data.code == 0) {
+                            this.vehicleInfo = res.data.data
+                        }
+                    })
+                } else {
+                    this.$message(res.data.message);
+                    this.$refs.form.resetFields();
+                }
+            })
         },
         reset(formName) {
             this.$refs[formName].resetFields();
-        }
+        },
+        async getVehicleDetail() {
+            this.$store.commit('getUser')
+            this.uId = this.$store.state.user.uId
+            this.vId = this.$route.params.id
+            var param = {
+                vid: this.vId
+            }
+            await vehicleInfo(param).then(res => {
+                if (res.data.code == 0) {
+                    this.vehicleInfo = res.data.data
+                }
+            })
+        },
+        async getDriverList() {
+            var param = {
+                vid: this.vId
+            }
+            await vehicleDriverList(param).then(res => {
+                if (res.data.code == 0) {
+                    this.driverList = res.data.data
+                }
+            })
+        },
+        toDetail(id) {
+            this.$router.push({ name: 'driver-detail', params: { 
+                did: id,
+                vid: this.vId}})
+        },
     }
 }
 </script>

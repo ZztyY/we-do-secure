@@ -143,7 +143,6 @@ export default {
     },
     methods: {
         submitForm() {
-            this.dialogVisible = false
             var param = new FormData()
             for (var key in this.form) {
                 param.append(key, this.form[key])
@@ -152,6 +151,7 @@ export default {
             param.append('hid', this.hID)
             homeAdd(param).then(res => {
                 if (res.data.code == 0) {
+                    this.dialogVisible = false
                     this.$message('edit success');
                     var param = {
                         hid: this.hID
@@ -161,6 +161,9 @@ export default {
                             this.homeInfo = res.data.data
                         }
                     })
+                } else {
+                    this.$message(res.data.message);
+                    this.$refs.form.resetFields();
                 }
             })
         },

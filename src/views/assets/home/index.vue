@@ -116,7 +116,6 @@ export default {
             this.$router.push({ name: 'home-detail', params: { id }})
         },
         submitForm() {
-            this.dialogVisible = false
             var param = new FormData()
             for (var key in this.form) {
                 param.append(key, this.form[key])
@@ -124,6 +123,7 @@ export default {
             param.append('uid', this.uId)
             homeAdd(param).then(res => {
                 if (res.data.code == 0) {
+                    this.dialogVisible = false
                     this.$message('create home success');
                     var param = {
                         uid: this.uId
@@ -133,6 +133,9 @@ export default {
                             this.homeList = res.data.data.list
                         }
                     })
+                } else {
+                    this.$message(res.data.message);
+                    this.$refs.form.resetFields();
                 }
             })
         },

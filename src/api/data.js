@@ -71,3 +71,51 @@ export const editProfile = (param) => {
         data: param
     })
 }
+
+export const vehicleList = (param) => {
+    return axios.request({
+        url: 'WDS/vehicle/user/list',
+        method: 'get',
+        params: param
+    })
+}
+
+export const vehicleInfo = (param) => {
+    return axios.request({
+        url: 'WDS/vehicle/get',
+        method: 'get',
+        params: param
+    })
+}
+
+export const editVehicle = (param) => {
+    return axios.request({
+        url: 'WDS/vehicle/edit',
+        method: 'post',
+        data: param
+    })
+}
+
+export const vehicleDriverList = (param) => {
+    return axios.request({
+        url: 'WDS/driver/vehicle/list',
+        method: 'get',
+        params: param
+    })
+}
+
+export const driverInfo = (param) => {
+    return axios.request({
+        url: 'WDS/driver/get',
+        method: 'get',
+        params: param
+    })
+}
+
+export const editDriver = (param) => {
+    return axios.request({
+        url: 'WDS/driver/edit',
+        method: 'post',
+        data: param
+    })
+}
