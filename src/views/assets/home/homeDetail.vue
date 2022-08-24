@@ -9,56 +9,56 @@
                     <i class="el-icon-date"></i>
                     purchase date
                 </template>
-                {{ homeInfo.PUR_DATE }}
+                {{ homeInfo.pur_date }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-coin"></i>
                     purchase value
                 </template>
-                {{ homeInfo.PUR_VAL }}
+                {{ homeInfo.pur_val }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-location"></i>
                     home area
                 </template>
-                {{ homeInfo.hAREA }}
+                {{ homeInfo.harea }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-house"></i>
                     home type
                 </template>
-                {{ homeInfo.hTYPE }}
+                {{ homeInfo.htype }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-bell"></i>
                     has auto fire notification
                 </template>
-                {{ homeInfo.hAFN }}
+                {{ homeInfo.hafn }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-monitor"></i>
                     has home security system
                 </template>
-                {{ homeInfo.hHSS }}
+                {{ homeInfo.hhss }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-ship"></i>
                     has swimming pool
                 </template>
-                {{ homeInfo.hSP }}
+                {{ homeInfo.hsp }}
             </el-descriptions-item>
             <el-descriptions-item :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-lock"></i>
                     has basement
                 </template>
-                {{ homeInfo.hBM }}
+                {{ homeInfo.hbm }}
             </el-descriptions-item>
         </el-descriptions>
 
@@ -68,40 +68,40 @@
         :visible.sync="dialogVisible"
         width="30%">
             <el-form :model="form" status-icon ref="form" label-width="200px">
-                <el-form-item label="purchase date" prop="PUR_DATE">
-                    <el-date-picker type="date" placeholder="choose date" v-model="form.PUR_DATE" style="width: 100%;"></el-date-picker>
+                <el-form-item label="purchase date" prop="pur_date">
+                    <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="choose date" v-model="form.pur_date" style="width: 100%;"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="purchase value" prop="PUR_VAL">
-                    <el-input v-model="form.PUR_VAL"></el-input>
+                <el-form-item label="purchase value" prop="pur_val">
+                    <el-input v-model="form.pur_val"></el-input>
                 </el-form-item>
-                <el-form-item label="home area" prop="hAREA">
-                    <el-input v-model="form.hAREA"></el-input>
+                <el-form-item label="home area" prop="harea">
+                    <el-input v-model="form.harea"></el-input>
                 </el-form-item>
-                <el-form-item label="home type" prop="hTYPE">
-                    <el-select v-model="form.hTYPE" placeholder="choose your home type">
+                <el-form-item label="home type" prop="htype">
+                    <el-select v-model="form.htype" placeholder="choose your home type">
                         <el-option label="single family" value="S"></el-option>
                         <el-option label="multi family" value="M"></el-option>
                         <el-option label="condominium" value="C"></el-option>
                         <el-option label="town house" value="T"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="has auto fire notification" prop="hAFN">
-                    <el-switch v-model="form.hAFN"></el-switch>
+                <el-form-item label="has auto fire notification" prop="hafn">
+                    <el-switch active-value="1" inactive-value="0" v-model="form.hafn"></el-switch>
                 </el-form-item>
-                <el-form-item label="has home security system" prop="hHSS">
-                    <el-switch v-model="form.hHSS"></el-switch>
+                <el-form-item label="has home security system" prop="hhss">
+                    <el-switch active-value="1" inactive-value="0" v-model="form.hhss"></el-switch>
                 </el-form-item>
-                <el-form-item label="has swimming pool" prop="hSP">
-                    <el-select v-model="form.hSP" placeholder="choose your swimming pool type">
+                <el-form-item label="has swimming pool" prop="hsp">
+                    <el-select v-model="form.hsp" placeholder="choose your swimming pool type">
                         <el-option label="under ground" value="U"></el-option>
                         <el-option label="over ground" value="O"></el-option>
                         <el-option label="indoor" value="I"></el-option>
                         <el-option label="multiple" value="M"></el-option>
-                        <el-option label="no" value=null></el-option>
+                        <el-option label="no" value=""></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="has home security system" prop="hBM">
-                    <el-switch v-model="form.hBM"></el-switch>
+                <el-form-item label="has home security system" prop="hbm">
+                    <el-switch active-value="1" inactive-value="0" v-model="form.hbm"></el-switch>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm">submit</el-button>
@@ -113,6 +113,7 @@
 </template>
 
 <script>
+import { homeDetail, homeAdd } from '@/api/data';
 
 export default {
     name: 'home-detail-view',
@@ -129,33 +130,48 @@ export default {
             dialogVisible: false,
             form: {
 
-            }
+            },
+            homeInfo: null,
+            hID: null,
+            uId: null
         }
     },
     mounted() {
-        console.log(this.$route.params.id)
+        this.$store.commit('getUser')
+        this.uId = this.$store.state.user.uId
+        this.hID = this.$route.params.id
+        var param = {
+            hid: this.hID
+        }
+        homeDetail(param).then(res => {
+            if (res.data.code == 0) {
+                this.homeInfo = res.data.data
+            }
+        })
     },
     computed: {
-        homeInfo() {
-            return {
-                hID: 1,
-                PUR_DATE: '2022/08/14',
-                PUR_VAL: 1000000.00,
-                hAREA: 300,
-                hTYPE: 'S',
-                hAFN: 0,
-                hHSS: 0,
-                hSP: null,
-                hBM: 1
-            }
-        },
-        hID() {
-            return this.$route.params.id
-        }
     },
     methods: {
         submitForm() {
-            console.log(this.form)
+            this.dialogVisible = false
+            var param = new FormData()
+            for (var key in this.form) {
+                param.append(key, this.form[key])
+            }
+            param.append('uid', this.uId)
+            param.append('hid', this.hID)
+            homeAdd(param).then(res => {
+                if (res.data.code == 0) {
+                    var param = {
+                        hid: this.hID
+                    }
+                    homeDetail(param).then(res => {
+                        if (res.data.code == 0) {
+                            this.homeInfo = res.data.data
+                        }
+                    })
+                }
+            })
         },
         reset(formName) {
             this.$refs[formName].resetFields();
