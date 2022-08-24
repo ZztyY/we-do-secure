@@ -2,16 +2,16 @@
     <div>
         <el-row :gutter="20" v-for="(row, index) in sliceList(homePoliciesList, 2)" :key="index">
             <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
-                <div @click="toDetail(item.pID)">
+                <div @click="toDetail(item.pid)">
                     <el-card shadow="hover" :class="'homePolicies'+ i">
                         <div style="display:flex; justify-content:space-between;">
                             <i class="el-icon-document"></i>
-                            <span> #{{ item.pID }} </span>
+                            <span> #{{ item.pid }} </span>
                         </div>
                         <el-divider></el-divider>
                         <div>
-                            <p>Policy Amount: ${{ item.pAMOUNT}}</p>
-                            <p v-if="item.pSTATUS === 'C'" style="color: green">CURRENT</p>
+                            <p>Policy Amount: ${{ item.pamount}}</p>
+                            <p v-if="item.pstatus === 'C'" style="color: green">CURRENT</p>
                             <p v-else style="color: red">EXPIRED</p>
                         </div>
                     </el-card>
@@ -22,61 +22,28 @@
 </template>
 
 <script>
+import { userPolicyList } from '@/api/data'
 
 export default {
     name: 'home-policies-view',
     data () {
         return {
-            homePoliciesList: [
-            {
-                pID: 16348123,
-                START_DATE: '2010/07/22',
-                END_DATE: '2020/7/22',
-                pAMOUNT: 4000,
-                pSTATUS: 'P',
-                pTYPE: 'H',
-                cID: 1
-            },
-            {
-                pID: 16349999,
-                START_DATE: '2010/07/22',
-                END_DATE: '2024/7/22',
-                pAMOUNT: 6000,
-                pSTATUS: 'C',
-                pTYPE: 'H',
-                cID: 1
-            },
-            {
-                pID: 18948123,
-                START_DATE: '2010/07/22',
-                END_DATE: '2020/7/22',
-                pAMOUNT: 4000,
-                pSTATUS: 'P',
-                pTYPE: 'H',
-                cID: 1
-            },
-            {
-                pID: 16309123,
-                START_DATE: '2010/07/22',
-                END_DATE: '2020/7/22',
-                pAMOUNT: 4000,
-                pSTATUS: 'P',
-                pTYPE: 'H',
-                cID: 1
-            },
-            {
-                pID: 16301723,
-                START_DATE: '2010/07/22',
-                END_DATE: '2020/7/22',
-                pAMOUNT: 4000,
-                pSTATUS: 'P',
-                pTYPE: 'H',
-                cID: 1
-            }
-            ]
+            homePoliciesList: null,
+            uId: null
         }
     },
     mounted() {
+        this.$store.commit('getUser')
+        this.uId = this.$store.state.user.uId
+        var param = {
+            uid: this.uId,
+            ptype: 'H'
+        }
+        userPolicyList(param).then(res => {
+            if (res.data.code == 0) {
+                this.homePoliciesList = res.data.data.list
+            }
+        })
     },
     computed: {
     },

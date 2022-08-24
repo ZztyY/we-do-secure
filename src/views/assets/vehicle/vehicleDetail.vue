@@ -3,6 +3,7 @@
         <el-descriptions v-if="vehicleInfo" class="Info" title="vehicle" :column="1" :size="size" border>
             <template slot="extra">
                 <el-button @click="dialogVisible = true" type="primary" size="small">Edit</el-button>
+                <el-button @click="purchaseDialogVisible = true" type="primary" size="small">buy policy</el-button>
             </template>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
@@ -99,11 +100,33 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
+
+        <!-- buy policy dialog -->
+        <el-dialog
+        title="purchase auto policy"
+        :visible.sync="purchaseDialogVisible"
+        width="30%">
+            <el-form :model="buyForm" status-icon ref="buyForm" label-width="200px">
+                <el-form-item label="policy start date" prop="start_date">
+                    <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="choose date" v-model="buyForm.start_date" style="width: 100%;"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="policy duration" prop="months">
+                    <el-input-number v-model="buyForm.months" @change="handleChange" :min="1" :max="120"></el-input-number>
+                </el-form-item>
+                <el-form-item label="policy amount" prop="pamount">
+                    <el-input v-model="buyForm.pamount" :disabled="true"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitBuyForm">submit</el-button>
+                    <el-button @click="reset('buyForm')">reset</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 
 <script>
-import { editVehicle, vehicleInfo, vehicleDriverList, editDriver } from '@/api/data';
+import { editVehicle, vehicleInfo, vehicleDriverList, editDriver, editPol } from '@/api/data';
 
 
 export default {
@@ -120,9 +143,9 @@ export default {
             },
             dialogVisible: false,
             driverDialogVisible: false,
-            form: {
-
-            },
+            purchaseDialogVisible: false,
+            form: {},
+            buyForm: {},
             driverForm: {
 
             },
@@ -202,6 +225,24 @@ export default {
                 }
             })
         },
+        submitBuyForm() {
+            var param = new FormData()
+            for (var key in this.buyForm) {
+                param.append(key, this.buyForm[key])
+            }
+            param.append('uid', this.uId)
+            param.append('ptype', 'A')
+            param.append('vid', this.vId)
+            editPol(param).then(res => {
+                if (res.data.code == 0) {
+                    this.purchaseDialogVisible = false
+                    this.$message('purchase success');
+                } else {
+                    this.$message(res.data.message);
+                    this.$refs.buyForm.resetFields();
+                }
+            })
+        },
         reset(formName) {
             this.$refs[formName].resetFields();
         },
@@ -233,6 +274,9 @@ export default {
                 did: id,
                 vid: this.vId}})
         },
+        handleChange(value) {
+            this.buyForm.pamount = 10*value
+        }
     }
 }
 </script>

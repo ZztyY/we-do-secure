@@ -61,7 +61,6 @@ export default {
     },
     methods: {
         load() {
-            console.log(this.invoices.length)
             if (this.invoices.length <= 20){
                 this.count+=1
                 this.invoices.push({

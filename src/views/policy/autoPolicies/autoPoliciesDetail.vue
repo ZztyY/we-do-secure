@@ -1,33 +1,33 @@
 <template>
     <div>
-        <el-descriptions class="Info" title="autoPolicy" :column="1" :size="size" border>
+        <el-descriptions v-if="autoPolicyInfo" class="Info" title="autoPolicy" :column="1" :size="size" border>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-date"></i>
                     policy start date
                 </template>
-                {{ autoPolicyInfo.START_DATE }}
+                {{ autoPolicyInfo.start_date }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-date"></i>
                     policy end date
                 </template>
-                {{ autoPolicyInfo.END_DATE }}
+                {{ autoPolicyInfo.end_date }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-coin"></i>
                     policy amount
                 </template>
-                ${{ autoPolicyInfo.pAMOUNT }}
+                ${{ autoPolicyInfo.pamount }}
             </el-descriptions-item>
             <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
                 <template slot="label">
                     <i class="el-icon-info"></i>
                     policy status
                 </template>
-                <p v-if="autoPolicyInfo.pSTATUS === 'C'" style="color: green">CURRENT</p>
+                <p v-if="autoPolicyInfo.pstatus === 'C'" style="color: green">CURRENT</p>
                 <p v-else style="color: red">EXPIRED</p>
             </el-descriptions-item>
         </el-descriptions>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { policyInfo } from '@/api/data';
 
 export default {
     name: 'auto-policy-detail-view',
@@ -47,27 +48,23 @@ export default {
             },
             labelStyle: {
                 'width': '30%'
-            }
+            },
+            autoPolicyInfo: null,
+            pId: null
         }
     },
     mounted() {
-        console.log(this.$route.params.id)
+        this.pId = this.$route.params.id
+        var param = {
+                pid: this.pId
+            }
+            policyInfo(param).then(res => {
+                if (res.data.code == 0) {
+                    this.autoPolicyInfo = res.data.data
+                }
+            })
     },
     computed: {
-        autoPolicyInfo() {
-            return {
-                pID: 16348123,
-                START_DATE: '2010/07/22',
-                END_DATE: '2020/7/22',
-                pAMOUNT: 4000,
-                pSTATUS: 'P',
-                pTYPE: 'A',
-                cID: 1
-            }
-        },
-        pID() {
-            return this.$route.params.id
-        }
     }
 }
 </script>

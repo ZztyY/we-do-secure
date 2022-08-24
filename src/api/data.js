@@ -119,3 +119,27 @@ export const editDriver = (param) => {
         data: param
     })
 }
+
+export const editPol = (param) => {
+    return axios.request({
+        url: 'WDS/pol/edit',
+        method: 'post',
+        data: param
+    })
+}
+
+export const userPolicyList = (param) => {
+    return axios.request({
+        url: 'WDS/pol/user/list',
+        method: 'get',
+        params: param
+    })
+}
+
+export const policyInfo = (param) => {
+    return axios.request({
+        url: 'WDS/pol/get',
+        method: 'get',
+        params: param
+    })
+}
