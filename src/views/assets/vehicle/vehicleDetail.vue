@@ -29,7 +29,7 @@
 
         <div v-if="driverList">
             <el-divider content-position="left">related drivers</el-divider>
-            <el-button @click="dialogVisible=true" type="primary">new</el-button>
+            <el-button @click="driverDialogVisible=true" type="primary">new</el-button>
             <el-row :gutter="20" v-for="(row, index) in sliceList(driverList, 2)" :key="index">
                 <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
                     <div @click="toDetail(item.did)">
@@ -75,11 +75,35 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
+
+        <el-dialog
+        title="new driver"
+        :visible.sync="driverDialogVisible"
+        width="30%">
+            <el-form :model="driverForm" status-icon ref="driverForm" label-width="200px">
+                <el-form-item label="first name" prop="fName">
+                    <el-input v-model="driverForm.fName"></el-input>
+                </el-form-item>
+                <el-form-item label="last name" prop="lName">
+                    <el-input v-model="driverForm.lName"></el-input>
+                </el-form-item>
+                <el-form-item label="license" prop="lNum">
+                    <el-input v-model="driverForm.lNum"></el-input>
+                </el-form-item>
+                <el-form-item label="birth date" prop="birth">
+                    <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="choose date" v-model="driverForm.birth" style="width: 100%;"></el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitDriverForm">submit</el-button>
+                    <el-button @click="reset('driverForm')">reset</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 
 <script>
-import { editVehicle, vehicleInfo, vehicleDriverList } from '@/api/data';
+import { editVehicle, vehicleInfo, vehicleDriverList, editDriver } from '@/api/data';
 
 
 export default {
@@ -95,7 +119,11 @@ export default {
                 'width': '30%'
             },
             dialogVisible: false,
+            driverDialogVisible: false,
             form: {
+
+            },
+            driverForm: {
 
             },
             vId: null,
@@ -147,6 +175,30 @@ export default {
                 } else {
                     this.$message(res.data.message);
                     this.$refs.form.resetFields();
+                }
+            })
+        },
+        submitDriverForm() {
+            var param = new FormData()
+            for (var key in this.driverForm) {
+                param.append(key, this.driverForm[key])
+            }
+            param.append('vid', this.vId)
+            editDriver(param).then(res => {
+                if (res.data.code == 0) {
+                    this.driverDialogVisible = false
+                    this.$message('create success');
+                    var param = {
+                        vid: this.vId
+                    }
+                    vehicleDriverList(param).then(res => {
+                        if (res.data.code == 0) {
+                            this.driverList = res.data.data
+                        }
+                    })
+                } else {
+                    this.$message(res.data.message);
+                    this.$refs.driverForm.resetFields();
                 }
             })
         },

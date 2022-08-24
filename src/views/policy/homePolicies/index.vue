@@ -27,13 +27,7 @@ export default {
     name: 'home-policies-view',
     data () {
         return {
-        }
-    },
-    mounted() {
-    },
-    computed: {
-        homePoliciesList(){
-            return [
+            homePoliciesList: [
             {
                 pID: 16348123,
                 START_DATE: '2010/07/22',
@@ -81,6 +75,10 @@ export default {
             }
             ]
         }
+    },
+    mounted() {
+    },
+    computed: {
     },
     methods: {
         sliceList(data, count) {
