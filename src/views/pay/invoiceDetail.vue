@@ -36,11 +36,30 @@
             </el-descriptions-item>
         </el-descriptions>
 
+        <div v-if="paymentList">
+            <el-divider content-position="left">payment history</el-divider>
+            <el-row :gutter="20" v-for="(row, index) in sliceList(paymentList, 2)" :key="index">
+                <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
+                    <el-card shadow="hover" :class="'payment'+ i">
+                        <div>
+                            <i class="el-icon-coin"></i>
+                            <span> ${{ item.pamount }} </span>
+                        </div>
+                        <el-divider></el-divider>
+                        <div>
+                            <p>pay date: {{ item.pdate }}</p>
+                            <p>pay method: {{ item.pmethod }}</p>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </div>
+
         <el-dialog
         title="make payment"
         :visible.sync="dialogVisible"
         width="30%">
-            <el-form :model="form" status-icon ref="form" label-width="200px">
+            <el-form v-if="invoiceInfo" :model="form" status-icon ref="form" label-width="200px">
                 <el-form-item label="amount" prop="pAmount">
                     <el-input-number v-model="form.pAmount" :precision="2" :step="0.1" :min="1" :max="invoiceInfo.amount_left"></el-input-number>
                 </el-form-item>
@@ -54,7 +73,7 @@
 </template>
 
 <script>
-import { makePayment, invoiceInfo } from '@/api/data';
+import { makePayment, invoiceInfo, paymentList } from '@/api/data';
 
 export default {
     name: 'invoice-detail-view',
@@ -68,6 +87,7 @@ export default {
                 'width': '30%'
             },
             invoiceInfo: null,
+            paymentList: null,
             iId: null,
             uId: null,
             dialogVisible: false,
@@ -86,10 +106,29 @@ export default {
                 this.invoiceInfo = res.data.data
             }
         })
+        paymentList(param).then(res => {
+            if (res.data.code == 0) {
+                this.paymentList = res.data.data.list
+            }
+        })
     },
     computed: {
     },
     methods: {
+        sliceList(data, count) {
+            if (data != undefined) {
+                let index = 0;
+                let tempArr = [];
+                for (let i = 0; i< data.length; i++) {
+                    index = parseInt(i / count);
+                    if (tempArr.length <= index) {
+                        tempArr.push([]);
+                    }
+                    tempArr[index].push(data[i]);
+                }
+                return tempArr
+            }
+        },
         submitForm() {
             var param = new FormData()
             for (var key in this.form) {

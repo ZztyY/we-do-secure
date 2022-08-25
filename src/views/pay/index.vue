@@ -36,7 +36,7 @@
                         <p v-if="userInfo.p_method === 'Credit' || userInfo.p_method === 'Debit'">
                             Visa, **** **** **** {{ userInfo.p_account_num.slice(-4) }}
                         </p>
-                        <p v-if="userInfo.p_method === 'Check'">
+                        <p v-else-if="userInfo.p_method === 'Check'">
                             Check, **** **** {{ userInfo.p_account_num.slice(-4) }}
                         </p>
                         <p v-else>

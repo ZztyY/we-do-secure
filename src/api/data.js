@@ -183,3 +183,11 @@ export const makePayment = (param) => {
         data: param
     })
 }
+
+export const paymentList = (param) => {
+    return axios.request({
+        url: 'WDS/payment/list',
+        method: 'get',
+        params: param
+    })
+}
