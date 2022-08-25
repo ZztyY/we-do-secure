@@ -224,8 +224,29 @@ export default {
                 }
             })
         },
+        // area*0.1+purval*0.5%+(-50)(if hss:1)+(-50)(if afn:1)+50*(htype--S:1/M:1.5/C:2/T:2.5)+50*(hsp--null:0/U:1/O:1.5/I:2/M:2.5)+20*(basement--1:1/0:0)
         handleChange(value) {
-            this.buyForm.pamount = 10*value
+            var h = this.homeInfo
+            var mPay = h.harea*0.1 + h.pur_val*0.0005
+            if (h.hss == 1) {
+                mPay -= 50
+            }
+            if (h.hafn == 1) {
+                mPay -= 50
+            }
+            if (h.htype === 'S') {
+                mPay += 50
+            } else if (h.htype === 'M') {
+                mPay += 75
+            } else if (h.htype === 'C') {
+                mPay += 100
+            } else if (h.htype === 'T') {
+                mPay += 125
+            }
+            if (h.hbm == 1) {
+                mPay += 20
+            }
+            this.buyForm.pamount = mPay * value
         }
     }
 }
