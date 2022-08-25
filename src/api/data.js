@@ -16,6 +16,14 @@ export const login = (param) => {
     })
 }
 
+export const userGet = (param) => {
+    return axios.request({
+        url: 'WDS/user/get',
+        method: 'get',
+        params: param
+    })
+}
+
 export const userList = (param) => {
     return axios.request({
         url: 'WDS/user/list',
@@ -141,5 +149,29 @@ export const policyInfo = (param) => {
         url: 'WDS/pol/get',
         method: 'get',
         params: param
+    })
+}
+
+export const userInvoiceList = (param) => {
+    return axios.request({
+        url: 'WDS/invoice/user/list',
+        method: 'get',
+        params: param
+    })
+}
+
+export const invoiceInfo = (param) => {
+    return axios.request({
+        url: 'WDS/invoice/get',
+        method: 'get',
+        params: param
+    })
+}
+
+export const updatePayment = (param) => {
+    return axios.request({
+        url: 'WDS/user/update/payment',
+        method: 'post',
+        data: param
     })
 }

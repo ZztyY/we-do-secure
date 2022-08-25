@@ -1,23 +1,26 @@
 <template>
     <div>
         <el-button @click="dialogVisible=true" type="primary">new</el-button>
-        <el-row :gutter="20" v-for="(row, index) in sliceList(vehicleList, 2)" :key="index">
-            <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
-                <div @click="toDetail(item.vid)">
-                    <el-card shadow="hover" :class="'vehicle'+ i">
-                        <div>
-                            <i class="el-icon-bicycle"></i>
-                            <span> {{ item.vin }} </span>
-                        </div>
-                        <el-divider></el-divider>
-                        <div>
-                            <p>Vehicle make model year: {{ item.vmmyear }}</p>
-                            <p>Vehicle status: {{ item.vstatus }}</p>
-                        </div>
-                    </el-card>
-                </div>
-            </el-col>
-        </el-row>
+        <div v-if="vehicleList.length">
+            <el-row :gutter="20" v-for="(row, index) in sliceList(vehicleList, 2)" :key="index">
+                <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
+                    <div @click="toDetail(item.vid)">
+                        <el-card shadow="hover" :class="'vehicle'+ i">
+                            <div>
+                                <i class="el-icon-bicycle"></i>
+                                <span> {{ item.vin }} </span>
+                            </div>
+                            <el-divider></el-divider>
+                            <div>
+                                <p>Vehicle make model year: {{ item.vmmyear }}</p>
+                                <p>Vehicle status: {{ item.vstatus }}</p>
+                            </div>
+                        </el-card>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+        <el-empty v-else description="create new vehicle"></el-empty>
 
         <el-dialog
         title="edit vehicle"
@@ -54,7 +57,7 @@ export default {
     data () {
         return {
             uId: null,
-            vehicleList: null,
+            vehicleList: [],
             dialogVisible: false,
             form: {
 

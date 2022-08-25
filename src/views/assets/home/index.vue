@@ -1,23 +1,26 @@
 <template>
     <div>
         <el-button @click="dialogVisible=true" type="primary">new</el-button>
-        <el-row :gutter="20" v-for="(row, index) in sliceList(homeList, 2)" :key="index">
-            <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
-                <div @click="toDetail(item.hid)">
-                    <el-card shadow="hover" :class="'home'+ i">
-                        <div style="display:flex; justify-content:space-between;">
-                            <i class="el-icon-s-home"></i>
-                            <span> ${{ item.pur_val }} </span>
-                        </div>
-                        <el-divider></el-divider>
-                        <div>
-                            <p>Area: {{ item.harea }}</p>
-                            <p>Home Type: {{ item.htype }}</p>
-                        </div>
-                    </el-card>
-                </div>
-            </el-col>
-        </el-row>
+        <div v-if="homeList.length">
+            <el-row :gutter="20" v-for="(row, index) in sliceList(homeList, 2)" :key="index">
+                <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
+                    <div @click="toDetail(item.hid)">
+                        <el-card shadow="hover" :class="'home'+ i">
+                            <div style="display:flex; justify-content:space-between;">
+                                <i class="el-icon-s-home"></i>
+                                <span> ${{ item.pur_val }} </span>
+                            </div>
+                            <el-divider></el-divider>
+                            <div>
+                                <p>Area: {{ item.harea }}</p>
+                                <p>Home Type: {{ item.htype }}</p>
+                            </div>
+                        </el-card>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+        <el-empty v-else description="create new home"></el-empty>
 
         <el-dialog
         title="edit home"
@@ -76,7 +79,7 @@ export default {
     data () {
         return {
             uId:null,
-            homeList: null,
+            homeList: [],
             dialogVisible: false,
             form: {
 

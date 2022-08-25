@@ -10,7 +10,8 @@ import {
   Input, Divider, Descriptions, DescriptionsItem,
   Dialog, Select, Option, DatePicker,
   Switch, RadioGroup, Radio,
-  InfiniteScroll, Message, InputNumber
+  InfiniteScroll, Message, InputNumber,
+  Empty, RadioButton
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import lang from 'element-ui/lib/locale/lang/en'
@@ -53,6 +54,8 @@ Vue.use(Radio)
 Vue.use(RadioGroup)
 Vue.use(InfiniteScroll)
 Vue.use(InputNumber)
+Vue.use(Empty)
+Vue.use(RadioButton)
 
 Vue.prototype.$http = http
 Vue.prototype.$message = Message

@@ -81,6 +81,7 @@
                                 {{ userInfo.mar_status }}
                             </el-descriptions-item>
                         </el-descriptions>
+                        <el-empty v-else description="no info"></el-empty>
                     </div>
                 </el-card>
             </el-col>

@@ -70,6 +70,11 @@ const routes = [
                 path: '/assets/driver/detail/:vid/:did',
                 name: 'driver-detail',
                 component: () => import('../views/assets/driver')
+            },
+            {
+                path: '/invoice/detail/:id',
+                name: 'invoice-detail',
+                component: () => import('../views/pay/invoiceDetail.vue')
             }
         ]
     },

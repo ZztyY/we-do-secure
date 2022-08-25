@@ -1,23 +1,26 @@
 <template>
     <div>
-        <el-row :gutter="20" v-for="(row, index) in sliceList(autoPoliciesList, 2)" :key="index">
-            <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
-                <div @click="toDetail(item.pid)">
-                    <el-card shadow="hover" :class="'autoPolicies'+ i">
-                        <div style="display:flex; justify-content:space-between;">
-                            <i class="el-icon-document"></i>
-                            <span> #{{ item.pid }} </span>
-                        </div>
-                        <el-divider></el-divider>
-                        <div>
-                            <p>Policy Amount: ${{ item.pamount}}</p>
-                            <p v-if="item.pstatus === 'C'" style="color: green">CURRENT</p>
-                            <p v-else style="color: red">EXPIRED</p>
-                        </div>
-                    </el-card>
-                </div>
-            </el-col>
-        </el-row>
+        <div v-if="autoPoliciesList">
+            <el-row :gutter="20" v-for="(row, index) in sliceList(autoPoliciesList, 2)" :key="index">
+                <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
+                    <div @click="toDetail(item.pid)">
+                        <el-card shadow="hover" :class="'autoPolicies'+ i">
+                            <div style="display:flex; justify-content:space-between;">
+                                <i class="el-icon-document"></i>
+                                <span> #{{ item.pid }} </span>
+                            </div>
+                            <el-divider></el-divider>
+                            <div>
+                                <p>Policy Amount: ${{ item.pamount}}</p>
+                                <p v-if="item.pstatus === 'C'" style="color: green">CURRENT</p>
+                                <p v-else style="color: red">EXPIRED</p>
+                            </div>
+                        </el-card>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+        <el-empty v-else description="no policies yet"></el-empty>
     </div>
 </template>
 
