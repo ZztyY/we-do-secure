@@ -38,7 +38,7 @@
         <el-dialog
         title="edit driver"
         :visible.sync="dialogVisible"
-        width="30%">
+        width="50%">
             <el-form :model="form" status-icon ref="form" label-width="200px">
                 <el-form-item label="first name" prop="fName">
                     <el-input v-model="form.fName"></el-input>

@@ -50,7 +50,7 @@
         <el-dialog
             title="update payment method"
             :visible.sync="dialogVisible"
-            width="30%">
+            width="50%">
             <el-form :model="form" status-icon ref="form" label-width="130px">
                 <el-form-item label="pay method" prop="p_method">
                     <el-radio-group v-model="form.p_method" size="small">

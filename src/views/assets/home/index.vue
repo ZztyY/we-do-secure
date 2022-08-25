@@ -23,12 +23,14 @@
         <el-empty v-else description="create new home"></el-empty>
 
         <el-dialog
-        title="edit home"
+        title="create home"
         :visible.sync="dialogVisible"
-        width="30%">
+        width="50%">
             <el-form :model="form" status-icon ref="form" label-width="200px">
                 <el-form-item label="purchase date" prop="pur_date">
-                    <el-date-picker type="date" v-model="form.pur_date" placeholder="choose date" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+                    <div class="block">
+                        <el-date-picker type="date" v-model="form.pur_date" placeholder="choose date" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+                    </div>
                 </el-form-item>
                 <el-form-item label="purchase value" prop="pur_val">
                     <el-input v-model="form.pur_val"></el-input>

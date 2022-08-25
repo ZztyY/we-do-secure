@@ -55,7 +55,7 @@
         <el-dialog
         title="edit vehicle"
         :visible.sync="dialogVisible"
-        width="30%">
+        width="50%">
             <el-form :model="form" status-icon ref="form" label-width="200px">
                 <el-form-item label="VIN" prop="vin">
                     <el-input v-model="form.vin"></el-input>
@@ -80,7 +80,7 @@
         <el-dialog
         title="new driver"
         :visible.sync="driverDialogVisible"
-        width="30%">
+        width="50%">
             <el-form :model="driverForm" status-icon ref="driverForm" label-width="200px">
                 <el-form-item label="first name" prop="fName">
                     <el-input v-model="driverForm.fName"></el-input>
@@ -105,7 +105,7 @@
         <el-dialog
         title="purchase auto policy"
         :visible.sync="purchaseDialogVisible"
-        width="30%">
+        width="50%">
             <el-form :model="buyForm" status-icon ref="buyForm" label-width="200px">
                 <el-form-item label="policy start date" prop="start_date">
                     <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="choose date" v-model="buyForm.start_date" style="width: 100%;"></el-date-picker>

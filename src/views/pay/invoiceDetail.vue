@@ -58,7 +58,7 @@
         <el-dialog
         title="make payment"
         :visible.sync="dialogVisible"
-        width="30%">
+        width="50%">
             <el-form v-if="invoiceInfo" :model="form" status-icon ref="form" label-width="200px">
                 <el-form-item label="amount" prop="pAmount">
                     <el-input-number v-model="form.pAmount" :precision="2" :step="0.1" :min="1" :max="invoiceInfo.amount_left"></el-input-number>

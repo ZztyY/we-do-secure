@@ -67,7 +67,7 @@
         <el-dialog
         title="edit home"
         :visible.sync="dialogVisible"
-        width="30%">
+        width="50%">
             <el-form :model="form" status-icon ref="form" label-width="200px">
                 <el-form-item label="purchase date" prop="pur_date">
                     <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="choose date" v-model="form.pur_date" style="width: 100%;"></el-date-picker>
@@ -115,7 +115,7 @@
         <el-dialog
         title="purchase home policy"
         :visible.sync="purchaseDialogVisible"
-        width="30%">
+        width="50%">
             <el-form :model="buyForm" status-icon ref="buyForm" label-width="200px">
                 <el-form-item label="policy start date" prop="start_date">
                     <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="choose date" v-model="buyForm.start_date" style="width: 100%;"></el-date-picker>

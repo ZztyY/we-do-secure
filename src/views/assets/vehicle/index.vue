@@ -23,9 +23,9 @@
         <el-empty v-else description="create new vehicle"></el-empty>
 
         <el-dialog
-        title="edit vehicle"
+        title="create vehicle"
         :visible.sync="dialogVisible"
-        width="30%">
+        width="50%">
             <el-form :model="form" status-icon ref="form" label-width="200px">
                 <el-form-item label="VIN" prop="vin">
                     <el-input v-model="form.vin"></el-input>

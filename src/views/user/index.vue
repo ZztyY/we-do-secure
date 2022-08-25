@@ -90,7 +90,7 @@
         <el-dialog
         title="edit profile"
         :visible.sync="dialogVisible"
-        width="30%">
+        width="50%">
             <el-form ref="form" :model="form" label-width="120px">
                 <el-form-item label="First Name">
                     <el-input v-model="form.fname"></el-input>
@@ -135,7 +135,7 @@
         <el-dialog
         title="reset password"
         :visible.sync="resetDialogVisible"
-        width="30%">
+        width="50%">
             <el-form :model="resetForm" status-icon :rules="rules" ref="resetForm" label-width="100px" class="resetPasswordForm">
                 <el-form-item label="password" prop="pass">
                     <el-input type="password" v-model="resetForm.pass" autocomplete="off"></el-input>
