@@ -1,20 +1,22 @@
 <template>
-    <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="register-container">
-        <h3 class="register-title"> Register </h3>
-        <el-form-item label="username" label-width="80px" prop="user_name" class="username">
-            <el-input type="input" v-model="form.user_name" autocomplete="off" placeholder="please input username"></el-input>
-        </el-form-item>
-        <el-form-item label="password" label-width="80px" prop="password" class="password">
-            <el-input type="password" v-model="form.password" autocomplete="off" placeholder="please input password"></el-input>
-        </el-form-item>
-        <el-form-item label="confirm" label-width="80px" prop="password2" class="password2">
-            <el-input type="password" v-model="form.password2" autocomplete="off" placeholder="please confirm password"></el-input>
-        </el-form-item>
-        <el-form-item class="register-confirm">
-            <el-button type="primary" @click="register" class="register-confirm"> register </el-button>
-            <el-button type="info" @click="gotoLogin" class="goto-login"> login </el-button>
-        </el-form-item>
-    </el-form>
+    <div class="back">
+        <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="register-container">
+            <h3 class="register-title"> Register </h3>
+            <el-form-item label="username" label-width="80px" prop="user_name" class="username">
+                <el-input type="input" v-model="form.user_name" autocomplete="off" placeholder="please input username"></el-input>
+            </el-form-item>
+            <el-form-item label="password" label-width="80px" prop="password" class="password">
+                <el-input type="password" v-model="form.password" autocomplete="off" placeholder="please input password"></el-input>
+            </el-form-item>
+            <el-form-item label="confirm" label-width="80px" prop="password2" class="password2">
+                <el-input type="password" v-model="form.password2" autocomplete="off" placeholder="please confirm password"></el-input>
+            </el-form-item>
+            <el-form-item class="register-confirm">
+                <el-button type="primary" @click="register" class="register-confirm"> register </el-button>
+                <el-button type="info" @click="gotoLogin" class="goto-login"> login </el-button>
+            </el-form-item>
+        </el-form>
+    </div>
 </template>
 
 <script>
@@ -93,6 +95,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.back{
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    background-image: url('../../assets/background.jpg')
+}
 .register-container {
     border-radius: 15px;
     background-clip: padding-box;

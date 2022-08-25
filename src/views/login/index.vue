@@ -1,17 +1,19 @@
 <template>
-    <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="login-container">
-        <h3 class="login-title"> Login </h3>
-        <el-form-item label="username" label-width="80px" prop="user_name" class="username">
-            <el-input type="input" v-model="form.user_name" autocomplete="off" placeholder="please input username"></el-input>
-        </el-form-item>
-        <el-form-item label="password" label-width="80px" prop="password" class="password">
-            <el-input type="password" v-model="form.password" autocomplete="off" placeholder="please input password"></el-input>
-        </el-form-item>
-        <el-form-item class="login-confirm">
-            <el-button type="primary" @click="login" class="login-confirm"> login </el-button>
-            <el-button type="info" @click="gotoRegister" class="goto-register"> register </el-button>
-        </el-form-item>
-    </el-form>
+    <div class="back">
+        <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="login-container">
+            <h3 class="login-title"> Login </h3>
+            <el-form-item label="username" label-width="80px" prop="user_name" class="username">
+                <el-input type="input" v-model="form.user_name" autocomplete="off" placeholder="please input username"></el-input>
+            </el-form-item>
+            <el-form-item label="password" label-width="80px" prop="password" class="password">
+                <el-input type="password" v-model="form.password" autocomplete="off" placeholder="please input password"></el-input>
+            </el-form-item>
+            <el-form-item class="login-confirm">
+                <el-button type="primary" @click="login" class="login-confirm"> login </el-button>
+                <el-button type="info" @click="gotoRegister" class="goto-register"> register </el-button>
+            </el-form-item>
+        </el-form>
+    </div>
 </template>
 
 <script>
@@ -65,6 +67,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.back{
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    background-image: url('../../assets/background.jpg')
+}
 .login-container {
     border-radius: 15px;
     background-clip: padding-box;
