@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </el-card>
-            <div class="statistics">
+            <div class="statistics" style="margin-top:20px;">
                 <el-card shadow="hover">
                     <el-descriptions class="Info" title="Statistics" direction="vertical" :column="1" :size="size" border>
                         <el-descriptions-item :labelStyle="labelStyle" :contentStyle="contentStyle">
@@ -26,12 +26,16 @@
             </div>
         </el-col>
         <el-col :span="10" style="margin-top: 20px">
+        <el-card shadow="hover">
+            <div id="myChart" ref="myChart"></div>
+        </el-card>
         </el-col>
     </el-row>
 </template>
 
 <script>
-import { userGet, userPolicyList } from '@/api/data'
+import { userGet, userPolicyList } from '@/api/data';
+import * as echarts from 'echarts';
 
 export default {
     name: 'overview-view',
@@ -75,29 +79,71 @@ export default {
                     this.policyList = res.data.data.list
                 }
             })
+            this.draw()
+        },
+        draw() {
+            var myChart = echarts.init(this.$refs.myChart)
+            myChart.setOption({
+                series: [
+                    {
+                    type: 'pie',
+                    data: [
+                        {
+                        value: this.autoPAmount,
+                        name: 'auto'
+                        },
+                        {
+                        value: this.homePAmount,
+                        name: 'home'
+                        }
+                    ]
+                    }
+                ]
+            })
         }
     },
     computed: {
         totalPAmount() {
             var total = 0
-            for (var p in this.policyList) {
-                total += p.pamount
-                console.log(p.pamount)
+            for (var key in this.policyList) {
+                total += this.policyList[key].pamount
             }
             return total
+        },
+        autoPAmount() {
+            var auto = 0
+            for (var key in this.policyList) {
+                if (this.policyList[key].ptype === "A") {
+                    auto += this.policyList[key].pamount
+                }
+            }
+            return auto
+        },
+        homePAmount() {
+            var home = 0
+            for (var key in this.policyList) {
+                if (this.policyList[key].ptype === "H") {
+                    home += this.policyList[key].pamount
+                }
+            }
+            return home
         }
     }
 }
 </script>
 
 <style lang="less" scoped>
-    .name{
+    #myChart {
+        width: 90%;
+        height: 300px;
+    }
+    .name {
         font-size: 30px;
     }
-    .role{
+    .role {
         font-size: 25px;
     }
-    .userImg{
+    .userImg {
         width: 40px;
         height: 40px;
         border-radius: 50%;
