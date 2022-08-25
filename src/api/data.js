@@ -175,3 +175,11 @@ export const updatePayment = (param) => {
         data: param
     })
 }
+
+export const makePayment = (param) => {
+    return axios.request({
+        url: 'WDS/invoice/make/payment',
+        method: 'post',
+        data: param
+    })
+}
