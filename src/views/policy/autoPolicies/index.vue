@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="autoPoliciesList">
+        <div v-if="count">
             <el-row :gutter="20" v-for="(row, index) in sliceList(autoPoliciesList, 2)" :key="index">
                 <el-col :span="8" style="margin-top: 20px;" v-for="(item, i) in row" :key="i">
                     <div @click="toDetail(item.pid)">
@@ -32,6 +32,7 @@ export default {
     data () {
         return {
             autoPoliciesList: null,
+            count: null,
             uId: null
         }
     },
@@ -45,6 +46,7 @@ export default {
         userPolicyList(param).then(res => {
             if (res.data.code == 0) {
                 this.autoPoliciesList = res.data.data.list
+                this.count = res.data.data.count
             }
         })
     },

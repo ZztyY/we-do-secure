@@ -32,6 +32,7 @@ export default {
     data () {
         return {
             homePoliciesList: null,
+            count: null,
             uId: null
         }
     },
@@ -45,6 +46,7 @@ export default {
         userPolicyList(param).then(res => {
             if (res.data.code == 0) {
                 this.homePoliciesList = res.data.data.list
+                this.count = res.data.data.count
             }
         })
     },
