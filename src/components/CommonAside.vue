@@ -89,7 +89,7 @@
               {
                 path: '/vehicle',
                 name: 'vehicle',
-                label: 'vehicle',
+                label: 'auto',
                 icon: 'bicycle',
                 url: '/vehicle'
               }

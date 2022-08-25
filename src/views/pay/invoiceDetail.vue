@@ -148,6 +148,11 @@ export default {
                             this.invoiceInfo = res.data.data
                         }
                     })
+                    paymentList(param).then(res => {
+                        if (res.data.code == 0) {
+                            this.paymentList = res.data.data.list
+                        }
+                    })
                 } else {
                     this.$message(res.data.message);
                     this.$refs.form.resetFields();

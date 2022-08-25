@@ -59,7 +59,7 @@
                         <el-option label="no" value=""></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="has home security system" prop="hbm">
+                <el-form-item label="has basement" prop="hbm">
                     <el-switch active-value="1" inactive-value="0" v-model="form.hbm"></el-switch>
                 </el-form-item>
                 <el-form-item>
